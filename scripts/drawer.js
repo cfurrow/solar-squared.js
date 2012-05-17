@@ -6,7 +6,26 @@ var drawer = (function(){
   pub.start = {};
   pub.celestials = [];
 
-  pub.drawCelestial = function(celestial){
+  pub.rescale = function(newScale) {
+    var i=0,
+        len=pub.celestials.length;
+    pub.scaleFactor = newScale;
+    pub.ctx.clearRect(0,0,pub.canvas.width,pub.canvas.height);
+    for(;i<len;i++){
+      pub.drawCelestial(pub.celestials[i].celestial,false,true);
+    }
+  };
+
+  pub.addAndDraw = function(celestial,showLine,showOrbit){
+    var x,y,radius;
+    pub.drawCelestial(celestial,showLine,showOrbit);
+    x = pub.start.x + celestial.distanceToSunMin * pub.scaleFactor;
+    y = pub.start.y;
+    radius = celestial.radius * pub.scaleFactor;
+    pub.celestials.push({celestial:celestial,x:x,y:y,radius:radius});
+  };
+
+  pub.drawCelestial = function(celestial,showLine,showOrbit){
     var x,y,radius;
     // x, y, radius, start angle (rads), end angle (rads), anticlockwise
     x = pub.start.x + celestial.distanceToSunMin * pub.scaleFactor;
@@ -15,7 +34,12 @@ var drawer = (function(){
     if(radius < 1){
       radius = 1;
     }
-    drawHelperLine(x);
+    if(showLine){
+      drawHelperLine(x);
+    }
+    if(showOrbit){
+      drawOrbit(x,y);
+    }
     pub.ctx.font = "16pt Helvetica";
     pub.ctx.fillStyle = "rgb(255,255,255)";
     pub.ctx.fillText(celestial.name,x+radius+15,y+(radius/2));
@@ -24,7 +48,6 @@ var drawer = (function(){
     pub.ctx.beginPath();
     pub.ctx.arc(x,y,radius,0,Math.PI*2,true);
     pub.ctx.fill();
-    pub.celestials.push({celestial:celestial,x:x,y:y,radius:radius});
   };
 
   function drawHelperLine(x){
@@ -33,6 +56,15 @@ var drawer = (function(){
     pub.ctx.beginPath();
     pub.ctx.moveTo(x,0);
     pub.ctx.lineTo(x,pub.canvas.height);
+    pub.ctx.stroke();
+  }
+
+  function drawOrbit(x,y){
+    var radius = x - pub.start.x;
+    pub.ctx.lineWidth = 1;
+    pub.ctx.strokeStyle = "rgb(255,255,255)";
+    pub.ctx.beginPath();
+    pub.ctx.arc(pub.start.x,pub.start.y,radius,0,Math.PI*2,true);
     pub.ctx.stroke();
   }
 

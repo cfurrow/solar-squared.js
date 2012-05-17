@@ -16,10 +16,10 @@
 
   <script>
     drawer.init();
-    drawer.drawCelestial(new Sun());
-    drawer.drawCelestial(new Mercury());
-    drawer.drawCelestial(new Venus());
-    drawer.drawCelestial(new Earth());
-    drawer.drawCelestial(new Mars());
+    drawer.addAndDraw(new Sun());
+    drawer.addAndDraw(new Mercury(),false,true);
+    drawer.addAndDraw(new Venus(),false,true);
+    drawer.addAndDraw(new Earth(),false,true);
+    drawer.addAndDraw(new Mars(),false,true);
   </script>
 </html>
