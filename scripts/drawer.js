@@ -2,7 +2,7 @@ var drawer = (function(){
   var pub    = {};
   pub.canvas = null;
   pub.ctx    = null;
-  pub.scaleFactor = 0.00005;
+  pub.scaleFactor = 0.00015;
   pub.start = {};
   pub.celestials = [];
 
@@ -15,10 +15,10 @@ var drawer = (function(){
     if(radius < 1){
       radius = 1;
     }
-    //drawHelperLine(x);
+    drawHelperLine(x);
     pub.ctx.font = "16pt Helvetica";
     pub.ctx.fillStyle = "rgb(255,255,255)";
-    pub.ctx.fillText(celestial.name,x+radius+15,y);
+    pub.ctx.fillText(celestial.name,x+radius+15,y+(radius/2));
 
     pub.ctx.fillStyle = celestial.fillStyle; 
     pub.ctx.beginPath();
