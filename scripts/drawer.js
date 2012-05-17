@@ -2,7 +2,7 @@ var drawer = (function(){
   var pub    = {};
   pub.canvas = null;
   pub.ctx    = null;
-  pub.scaleFactor = 0.00015;
+  pub.scaleFactor = 0.000005;
   pub.start = {};
   pub.celestials = [];
 
