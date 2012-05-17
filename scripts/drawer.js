@@ -8,19 +8,30 @@ var drawer = (function(){
 
   pub.drawCelestial = function(celestial){
     var x,y,radius;
-    pub.ctx.fillStyle = celestial.fillStyle; 
     // x, y, radius, start angle (rads), end angle (rads), anticlockwise
-    pub.ctx.beginPath();
     x = pub.start.x + celestial.distanceToSunMin * pub.scaleFactor;
     y = pub.start.y;
     radius = celestial.radius * pub.scaleFactor;
     if(radius < 1){
       radius = 1;
     }
+    drawHelperLine(x);
+
+    pub.ctx.fillStyle = celestial.fillStyle; 
+    pub.ctx.beginPath();
     pub.ctx.arc(x,y,radius,0,Math.PI*2,true);
     pub.ctx.fill();
     pub.celestials.push({celestial:celestial,x:x,y:y,radius:radius});
   };
+
+  function drawHelperLine(x){
+    pub.ctx.lineWidth = 1;
+    pub.ctx.strokeStyle = "rgb(255,255,255)";
+    pub.ctx.beginPath();
+    pub.ctx.moveTo(x,0);
+    pub.ctx.lineTo(x,pub.canvas.height);
+    pub.ctx.stroke();
+  }
 
   pub.init = function(){
     pub.canvas = document.getElementById("solar-system");
