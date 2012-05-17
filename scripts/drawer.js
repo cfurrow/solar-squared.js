@@ -15,7 +15,10 @@ var drawer = (function(){
     if(radius < 1){
       radius = 1;
     }
-    drawHelperLine(x);
+    //drawHelperLine(x);
+    pub.ctx.font = "16pt Helvetica";
+    pub.ctx.fillStyle = "rgb(255,255,255)";
+    pub.ctx.fillText(celestial.name,x+radius+15,y);
 
     pub.ctx.fillStyle = celestial.fillStyle; 
     pub.ctx.beginPath();
