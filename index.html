@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>Solar.js</title>
+    <link rel="stylesheet" type="text/css" href="styles/solar.css"/>
+  </head>
+  <body>
+    <canvas id="solar-system" width="940" height="700"></canvas>
+  </body>
+
+  <script src="scripts/drawer.js"></script>
+  <script src="scripts/models/sun.js"></script>
+  <script src="scripts/models/mercury.js"></script>
+
+  <script>
+    drawer.init();
+    drawer.drawCelestial(new Sun());
+    drawer.drawCelestial(new Mercury());
+  </script>
+</html>
