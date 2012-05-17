@@ -4,16 +4,22 @@
     <link rel="stylesheet" type="text/css" href="styles/solar.css"/>
   </head>
   <body>
-    <canvas id="solar-system" width="940" height="700"></canvas>
+    <canvas id="solar-system" width="10000" height="400"></canvas>
   </body>
 
   <script src="scripts/drawer.js"></script>
   <script src="scripts/models/sun.js"></script>
   <script src="scripts/models/mercury.js"></script>
+  <script src="scripts/models/venus.js"></script>
+  <script src="scripts/models/earth.js"></script>
+  <script src="scripts/models/mars.js"></script>
 
   <script>
     drawer.init();
     drawer.drawCelestial(new Sun());
     drawer.drawCelestial(new Mercury());
+    drawer.drawCelestial(new Venus());
+    drawer.drawCelestial(new Earth());
+    drawer.drawCelestial(new Mars());
   </script>
 </html>
