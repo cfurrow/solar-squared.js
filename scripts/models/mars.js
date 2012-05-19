@@ -4,4 +4,14 @@ function Mars() {
   this.distanceToSunMin = 206669000; //km
   this.distanceToSunMax = 249209300; //km
 	this.name = "mars";
+	this.x = 0;
+	this.y =0;
+	this.showLine = false;
+	this.showOrbit = true;
 }
+
+Mars.prototype.draw = function(ctx,scale){
+  circleDrawer.drawCircle(ctx,this,scale);
+
+	textDrawer.drawText(ctx,this.x+(this.radius*scale),this.y+(this.radius*scale/2),this.name);
+};

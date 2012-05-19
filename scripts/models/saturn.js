@@ -4,4 +4,12 @@ function Saturn(){
   this.distanceToSunMin = 1400000000;
   this.distanceToSunMax = this.distanceToSunMin; //km
 	this.name="saturn";
+  this.x = 0;
+  this.y = 0;
+  this.showLine = false;
+  this.showOrbit = true;
 }
+Saturn.prototype.draw = function(ctx,scale){
+  circleDrawer.drawCircle(ctx,this,scale);
+	textDrawer.drawText(ctx,this.x+(this.radius*scale),this.y+(this.radius*scale/2),this.name);
+};
