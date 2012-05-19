@@ -23,5 +23,13 @@ var circleDrawer = (function(){
 		ctx.fill();
 	};
 
+	pub.drawCircleStroked = function(ctx,info,scale){
+    pub.ctx.lineWidth = 1;
+    pub.ctx.strokeStyle = "rgb(255,255,255)";
+    pub.ctx.beginPath();
+    pub.ctx.arc(info.x,info.y,info.radius,0,Math.PI*2,true);
+    pub.ctx.stroke();
+	};
+
 	return pub;
 })();
