@@ -3,6 +3,7 @@ var solar = (function(){
   var canvas      = null;
   var ctx         = null;
   var scaleFactor = 0.000005;
+	var scaleStep   = 0.000001;
 	var ticks       = 0;
 	var FPS         = 30;
   pub.celestials  = [];
@@ -59,6 +60,31 @@ var solar = (function(){
     ctx    = canvas.getContext('2d');
 
     circleDrawer.setContext(ctx);
+
+		$(document).bind("keydown",function(e){
+			if(e.which == 39){
+				// right
+			}
+			else if(e.which == 37){
+				// left
+			}
+			else if(e.which == 187 ){
+				// + or =
+				var newscale = scaleFactor + scaleStep;
+				if(e.shiftKey){
+					newscale = scaleFactor + (scaleStep * 10);
+				}
+				solar.rescale(newscale);
+			}
+			else if(e.which == 189){
+				// -
+				var newscale = scaleFactor - scaleStep;
+				if(e.shiftKey){
+					newscale = scaleFactor - (scaleStep * 10);
+				}
+				solar.rescale(newscale);
+			}
+		});
   };
  
   return pub;
