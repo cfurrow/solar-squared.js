@@ -13,5 +13,5 @@ function Jupiter(){
 Jupiter.prototype.draw = function(ctx,scale){
   circleDrawer.drawCircle(ctx,this,scale);
   circleDrawer.drawCircleStroked(ctx,{radius:this.x,x:0,y:300},scale);
-	textDrawer.drawText(ctx,this.x+(this.radius*scale),this.y+(this.radius*scale/2),this.name);
+	textDrawer.drawText(ctx,scale,this);
 };

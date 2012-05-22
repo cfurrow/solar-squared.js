@@ -12,6 +12,6 @@ function Sun(){
 
 Sun.prototype.draw = function(ctx,scale){
   circleDrawer.drawCircle(ctx,this,scale);
-	textDrawer.drawText(ctx,this.x+(this.radius*scale),this.y+(this.radius*scale/2),this.name);
+	textDrawer.drawText(ctx,scale,this);
 };
 
