@@ -8,7 +8,6 @@
   </body>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  <script src="scripts/lib/jquery.hotkeys.js"></script>
   <script src="scripts/text-drawer.js"></script>
   <script src="scripts/circle-drawer.js"></script>
   <script src="scripts/solar.js"></script>
@@ -19,6 +18,8 @@
   <script src="scripts/models/mars.js"></script>
   <script src="scripts/models/jupiter.js"></script>
   <script src="scripts/models/saturn.js"></script>
+  <script src="scripts/models/uranus.js"></script>
+  <script src="scripts/models/neptune.js"></script>
 
   <script>
     solar.init();
@@ -29,6 +30,8 @@
     solar.add(new Mars());
     solar.add(new Jupiter());
     solar.add(new Saturn());
+    solar.add(new Uranus());
+    solar.add(new Neptune());
 
     solar.go();
   </script>

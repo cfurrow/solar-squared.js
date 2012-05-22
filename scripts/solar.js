@@ -3,9 +3,10 @@ var solar = (function(){
   var canvas      = null;
   var ctx         = null;
   var scaleFactor = 0.000005;
-	var scaleStep   = 0.000001;
+	var scaleStep   = 0.0000001;
+	var KM_TO_MILE  = 0.621371192;
 	var ticks       = 0;
-	var FPS         = 30;
+	var FPS         = 60;
   pub.celestials  = [];
 
   pub.rescale = function(newScale) {
@@ -43,7 +44,8 @@ var solar = (function(){
 	function drawScale(){
 		ctx.font      = "14pt Helvetica";
 		ctx.fillStyle = "rgb(255,255,255)";
-		ctx.fillText("Current Scale: " + scaleFactor,15,30);
+		ctx.fillText("Current Scale: One pixel = " + scaleFactor + " km or " + (scaleFactor*KM_TO_MILE) + " miles",15,30);
+
 	}
 
   function drawHelperLine(x){
@@ -72,18 +74,28 @@ var solar = (function(){
 			else if(e.which == 187 ){
 				// + or =
 				newscale = scaleFactor + scaleStep;
-				if(e.shiftKey){
+				if(e.shiftKey && !e.ctrlKey){
 					newscale = scaleFactor + (scaleStep * 10);
+				}
+				else if(e.shiftKey && e.ctrlKey){
+					newscale = scaleFactor + (scaleStep * 1000);
 				}
 				solar.rescale(newscale);
 			}
 			else if(e.which == 189){
 				// - or _
 				newscale = scaleFactor - scaleStep;
-				if(e.shiftKey){
+				if(e.shiftKey && !e.ctrlKey){
 					newscale = scaleFactor - (scaleStep * 10);
 				}
+				else if(e.shiftKey && e.ctrlKey){
+					newscale = scaleFactor - (scaleStep * 1000);
+				}
 				solar.rescale(newscale);
+			}
+			else if(e.which == 48) {
+				// 0
+				solar.rescale(0.000005);
 			}
 		});
   };
