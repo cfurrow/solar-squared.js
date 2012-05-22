@@ -24,10 +24,14 @@ var circleDrawer = (function(){
 	};
 
 	pub.drawCircleStroked = function(ctx,info,scale){
+		var radiusScaled;
+		var x = info.x - info.distanceToSunMin * scale;
+		var y = 300;
+
     pub.ctx.lineWidth = 1;
     pub.ctx.strokeStyle = "rgb(255,255,255)";
     pub.ctx.beginPath();
-    pub.ctx.arc(info.x,info.y,info.radius,0,Math.PI*2,true);
+    pub.ctx.arc(x,y,info.x,0,Math.PI*2,true);
     pub.ctx.stroke();
 	};
 

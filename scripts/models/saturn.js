@@ -11,6 +11,6 @@ function Saturn(){
 }
 Saturn.prototype.draw = function(ctx,scale){
   circleDrawer.drawCircle(ctx,this,scale);
-  circleDrawer.drawCircleStroked(ctx,{radius:this.x,x:0,y:300},scale);
+  circleDrawer.drawCircleStroked(ctx,this,scale);
 	textDrawer.drawText(ctx,scale,this);
 };

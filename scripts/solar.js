@@ -15,6 +15,7 @@ var solar = (function(){
   };
 
   pub.add = function(celestial){
+		celestial.x = celestial.distanceToSunMin * scaleFactor;
     celestial.y = 300;
     pub.celestials.push(celestial);
   };
@@ -30,8 +31,12 @@ var solar = (function(){
 
 	function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
+		eachCelestial(function(c){c.draw(ctx,scaleFactor);});
+	}
+
+	function eachCelestial(callback){
     for(var i=0; i<pub.celestials.length; i++){
-      pub.celestials[i].draw(ctx,scaleFactor);
+      callback(pub.celestials[i]);
     }
 	}
 
@@ -67,9 +72,14 @@ var solar = (function(){
 			var newscale = scaleFactor;
 			if(e.which == 39){
 				// right
+				eachCelestial(function(c){
+					c.x -= 100;	
+				});
 			}
 			else if(e.which == 37){
-				// left
+				eachCelestial(function(c){
+					c.x += 100;	
+				});
 			}
 			else if(e.which == 187 ){
 				// + or =
