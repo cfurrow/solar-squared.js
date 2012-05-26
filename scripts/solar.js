@@ -63,8 +63,15 @@ var solar = (function(){
   }
 
   pub.init = function(){
-    canvas = document.getElementById("solar-system");
-    ctx    = canvas.getContext('2d');
+    canvas        = document.getElementById("solar-system");
+    ctx           = canvas.getContext('2d');
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.onresize = function(){
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
 
     circleDrawer.setContext(ctx);
 
