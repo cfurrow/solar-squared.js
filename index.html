@@ -8,8 +8,10 @@
   </body>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script src="scripts/libs/underscore.js"></script>
   <script src="scripts/text-drawer.js"></script>
   <script src="scripts/circle-drawer.js"></script>
+  <script src="scripts/viewport.js"></script>
   <script src="scripts/solar.js"></script>
   <script src="scripts/models/sun.js"></script>
   <script src="scripts/models/mercury.js"></script>
@@ -22,17 +24,18 @@
   <script src="scripts/models/neptune.js"></script>
 
   <script>
-    solar.init();
-    solar.add(new Sun());
-    solar.add(new Mercury());
-    solar.add(new Venus());
-    solar.add(new Earth());
-    solar.add(new Mars());
-    solar.add(new Jupiter());
-    solar.add(new Saturn());
-    solar.add(new Uranus());
-    solar.add(new Neptune());
+    var sun = new Sun();
+    sun.addOrbiter(new Mercury());
+    sun.addOrbiter(new Venus());
+    sun.addOrbiter(new Earth());
+    sun.addOrbiter(new Mars());
+    sun.addOrbiter(new Jupiter());
+    sun.addOrbiter(new Saturn());
+    sun.addOrbiter(new Uranus());
+    sun.addOrbiter(new Neptune());
 
+    solar.init();
+    solar.add(sun);
     solar.go();
   </script>
 </html>

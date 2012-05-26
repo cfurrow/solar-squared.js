@@ -8,10 +8,23 @@ function Sun(){
   this.y                = 0;
   this.showLine         = false;
   this.showOrbit        = false;
+  this.orbiters         = [];
+  this.scale            = 1;
 }
 
-Sun.prototype.draw = function(ctx,scale){
-  circleDrawer.drawCircle(ctx,this,scale);
-	textDrawer.drawText(ctx,scale,this);
+Sun.prototype.draw = function(ctx){
+  circleDrawer.drawCircle(ctx,this,this.scale);
+  textDrawer.drawText(ctx,this.scale,this);
+  _.each(this.orbiters,function(o){
+    o.draw(ctx);
+  });
+};
+
+Sun.prototype.addOrbiter = function(orbiter){
+  orbiter.orbits = this;
+  orbiter.x = orbiter.distanceToSunMin;
+  orbiter.y = 300;
+  orbiter.scale = this.scale;
+  this.orbiters.push(orbiter);
 };
 
