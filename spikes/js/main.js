@@ -14,10 +14,9 @@ function init(){
   viewport.addModel(model);
 
   var model1 = new Model();
-  model1.setX(301);
+  model1._radius = 100;
+  model1.setX(1000);
   model1.setY(301);
-  model1.setWidth(100);
-  model1.setHeight(100);
   viewport.addModel(model1);
 
   setInterval(function(){
