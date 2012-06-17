@@ -11,8 +11,14 @@ function init(){
   var model = new Model();
   model.setX(101);
   model.setY(101);
-
   viewport.addModel(model);
+
+  var model1 = new Model();
+  model1.setX(301);
+  model1.setY(301);
+  model1.setWidth(100);
+  model1.setHeight(100);
+  viewport.addModel(model1);
 
   setInterval(function(){
     clear(ctx);
@@ -21,7 +27,6 @@ function init(){
 
 
   $("body").keydown(function(e){
-    console.log(e); 
     if(e.keyCode == 39){ // right
       viewport.setX(viewport.getX()+10);
     }

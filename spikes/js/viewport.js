@@ -51,8 +51,8 @@ ViewPort.prototype.isObjectVisible = function(obj){
     var y = this.getViewPortY(obj.getY());
     var maxx = this.getViewPortX(obj.getXMax());
     var maxy = this.getViewPortY(obj.getYMax());
-    if(x >= this.getViewPortX(this.getX()) && x <= this.getViewPortX(this.getXMax())){
-      if(y>=this.getViewPortY(this.getY()) && y <= this.getViewPortY(this.getYMax())){
+    if(maxx >= this.getViewPortX(this.getX()) && x <= this.getViewPortX(this.getXMax())){
+      if(maxy>=this.getViewPortY(this.getY()) && y <= this.getViewPortY(this.getYMax())){
         return true;
       }
     }

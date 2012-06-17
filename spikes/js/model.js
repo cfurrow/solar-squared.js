@@ -36,6 +36,14 @@ Model.prototype.getYMax = function(){
 	}
 };
 
+Model.prototype.setWidth = function(width){
+	this._width = width;
+};
+
+Model.prototype.setHeight = function(height){
+	this._height = height;
+};
+
 
 Model.prototype.draw = function(ctx,x,y){
 	ctx.fillStyle = this._fillStyle;
