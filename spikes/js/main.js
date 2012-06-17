@@ -25,8 +25,14 @@ function init(){
     if(e.keyCode == 39){ // right
       viewport.setX(viewport.getX()+10);
     }
-    if(e.keyCode == 37){ // left
+    else if(e.keyCode == 37){ // left
       viewport.setX(viewport.getX()-10);
+    }
+    else if(e.keyCode == 38){ // up
+      viewport.setY(viewport.getY()-10);
+    }
+    else if(e.keyCode == 40){ // down
+      viewport.setY(viewport.getY()+10);
     }
   });
   
