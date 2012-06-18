@@ -1,0 +1,28 @@
+/* Author: Carl Furrow (me@carlfurrow.com)
+
+*/
+
+function init(){
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+
+  drawRect(ctx,300,400,100,100,"#ffde40",true);
+}
+
+function drawRect(ctx,x,y,w,h,fill,glow){
+  if(glow){
+    var radgrad = ctx.createRadialGradient(x/2,y/2,0,x/2,y/2,w*2);
+    radgrad.addColorStop(0,fill);
+    radgrad.addColorStop(1,"#000");
+
+    ctx.fillStyle = radgrad;
+    ctx.strokeStyle = "#fff";
+    ctx.fillRect(x-x/2,y-y/2,w*2,h*2);
+    ctx.strokeRect(x-x/2,y-y/2,w*2,h*2);
+  }
+
+
+  ctx.fillStyle = fill;
+  ctx.fillRect(x,y,w,h);
+}
+
