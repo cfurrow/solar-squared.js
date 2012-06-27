@@ -4,7 +4,6 @@ function ViewPort(ctx){
   this._height = this._ctx.canvas.height;
   this._x      = 0;
   this._y      = 0;
-  this._models = [];
 }
 
 ViewPort.prototype.setX = function(x){
@@ -62,27 +61,3 @@ ViewPort.prototype.isObjectVisible = function(obj){
   return false;
 };
 
-ViewPort.prototype.addModel = function(model){
-  this._models.push(model);
-};
-
-ViewPort.prototype.drawModels = function(){
-  var i=0;
-  var len = this._models.length;
-  var model = null;
-  for(;i<len;i++){
-    model = this._models[i];
-    if(this.isObjectVisible(model)){
-      model.draw(this._ctx,this.getViewPortX(model._x),this.getViewPortY(model._y));
-    }
-  }
-};
-
-ViewPort.prototype.toString = function(){
-  var string = [];
-	string.push("viewport.x: " + viewport.getX() + "\n");
-	string.push("viewport.y: " + viewport.getY() + "\n");
-	string.push("viewport.width: " + viewport.getWidth() + "\n");
-	string.push("viewport.height: " + viewport.getHeight() + "\n");
-  return string.join("");
-};
