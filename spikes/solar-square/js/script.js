@@ -18,7 +18,7 @@ function init(){
     x:0,
     y:0
   };
-  sun.x = canvas.width / 2 - sun.width/2;
+  sun.x = 100;
   sun.y = canvas.height /2 - sun.height/2;
 
   var mercury = {
@@ -54,8 +54,8 @@ function init(){
   };
 
   var jupiter = {
-    width: 10,
-    height: 10,
+    width: 15,
+    height: 15,
     fillStyle: "#ffb640",
     x: mars.x + 100,
     y: mars.y
@@ -65,7 +65,7 @@ function init(){
     width: 3,
     height: 3,
     fillStyle: "#ffb640",
-    x: jupiter.x + 100,
+    x: jupiter.x + 250,
     y: jupiter.y,
     ring: {
       width: 7,
@@ -77,7 +77,7 @@ function init(){
   var uranus = {
     width: 1,
     height: 1,
-    fillStyle: "#ffb640",
+    fillStyle: "#33cdc7",
     x: saturn.x + 200,
     y: saturn.y
   };
@@ -85,7 +85,7 @@ function init(){
   var neptune = {
     width: 1,
     height: 1,
-    fillStyle: "#ffb640",
+    fillStyle: "#0b5fa5",
     x: uranus.x + 100,
     y: uranus.y
   };
