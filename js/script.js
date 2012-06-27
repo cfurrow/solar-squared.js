@@ -155,8 +155,6 @@ function updatePosition(obj, centerObj, viewport){
     obj.minX        = centerObjCenter[0] - obj.orbitRadius;
     obj.maxY        = centerObjCenter[1] + obj.orbitRadius;
     obj.minY        = centerObjCenter[1] - obj.orbitRadius;
-    obj.x = obj.maxX;
-    obj.y = obj.maxY;
   }
   if(obj.x >= obj.maxX && (obj.y <= obj.maxY && obj.y >= obj.minY)){
     // right side
@@ -177,6 +175,10 @@ function updatePosition(obj, centerObj, viewport){
     // bottom
     obj.x+=stepAmount;
     obj.y=obj.maxY;
+  }
+  else{
+    obj.x = obj.maxX;
+    obj.y = obj.maxY;
   }
 }
 
