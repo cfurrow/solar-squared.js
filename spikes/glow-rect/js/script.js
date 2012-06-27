@@ -14,13 +14,15 @@ function init(){
 
   var circleX, circleY;
   circleX = 350;
-  circleY = 200;
+  circleY = 250;
 
   var radius = 200;
 
   var deg1, deg2;
   deg1 = 90 * (180/Math.PI);
   deg2 = 180 * (180/Math.PI);
+
+  var degreeStep = 0.0009 * (180/Math.PI);
 
 
   setInterval(function(){
@@ -31,13 +33,13 @@ function init(){
       deg1 = 0;
     }
     else{
-      deg1 += 0.0005 * (180/Math.PI);
+      deg1 += degreeStep;
     }
     if(deg2 > Math.Pi * 2){
       deg2 = 0;
     }
     else{
-      deg2 += 0.0005 * (180/Math.PI);
+      deg2 += degreeStep;
     }
 
     x1 = radius * (Math.cos(deg1)) + circleX;
@@ -45,7 +47,7 @@ function init(){
     y1 = radius * (Math.sin(deg1)) + circleY;
     y2 = radius * (Math.sin(deg2)) + circleY;
   
-  },60/1000);
+  },20/1000);
 }
 
 function drawRect(ctx,x,y,w,h,fill,glow){
