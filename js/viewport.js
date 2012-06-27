@@ -4,6 +4,7 @@ function ViewPort(ctx){
   this._height = this._ctx.canvas.height;
   this._x      = 0;
   this._y      = 0;
+  this._scale  = 1.0;
 }
 
 ViewPort.prototype.setX = function(x){
@@ -39,25 +40,48 @@ ViewPort.prototype.getHeight = function(){
 };
 
 ViewPort.prototype.getViewPortX = function(objx){
-  return objx - this._x;
+  return (objx - this._x) * this.getScale();
 };
 
 ViewPort.prototype.getViewPortY = function(objy){
-  return objy - this._y;
+  return (objy - this._y) * this.getScale();
+};
+
+ViewPort.prototype.setScale = function(newscale){
+  this._scale = newscale;
+};
+
+ViewPort.prototype.getScale = function(){
+  return this._scale;
 };
 
 ViewPort.prototype.isObjectVisible = function(obj){
-  if(obj.getX && obj.getY && obj.getXMax && obj.getYMax){
-    var x = this.getViewPortX(obj.getX());
-    var y = this.getViewPortY(obj.getY());
-    var maxx = this.getViewPortX(obj.getXMax());
-    var maxy = this.getViewPortY(obj.getYMax());
-    if(maxx >= this.getViewPortX(this.getX()) && x <= this.getViewPortX(this.getXMax())){
-      if(maxy>=this.getViewPortY(this.getY()) && y <= this.getViewPortY(this.getYMax())){
-        return true;
-      }
+  var scalex = this.getViewPortX(obj.x);
+  var scaley = this.getViewPortY(obj.y);
+  var scalew = this.getScale() * obj.width;
+  var scaleh = this.getScale() * obj.height;
+  var maxx = (scalex + scalew);
+  var maxy = (scaley + scaleh);
+
+  if( (scalex <= this.getXMax() || scalex >= this.getX()) || (maxx <= this.getXMax() || maxx >= this.getX()) )
+  {
+    if( (scaley <= this.getYMax() || scaley >= this.getY()) || (maxy <= this.getYMax() || maxy >= this.getY()) ){
+      return true;
     }
   }
+
   return false;
+};
+
+ViewPort.prototype.setCenter = function(x,y){
+  // viewport.x = x-viewport.width
+  this.setX( x - this.getWidth()/2 ); 
+  this.setY( y - this.getHeight()/2 );
+};
+
+ViewPort.prototype.getCenter = function(){
+  var centerx = this.getX()+this.getWidth()/2;
+  var centery = this.getY()+this.getHeight()/2;
+  return [centerx,centery];
 };
 

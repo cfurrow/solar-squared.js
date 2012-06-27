@@ -7,10 +7,9 @@ function init(){
   var canvas    = document.getElementById('canvas');
   var ctx       = canvas.getContext('2d');
   var viewport  = new ViewPort(ctx);
+  window.viewport = viewport;
+  viewport.setScale(0.5);
   var entities  = [];
-
-  resizeToFit(ctx);
-  clear(ctx);
 
   var sun = {
     width: 100,
@@ -20,8 +19,9 @@ function init(){
     y:0,
     orbit:false
   };
-  sun.x = canvas.width / 2 - sun.width /2;
-  sun.y = canvas.height /2 - sun.height/2;
+  sun.x = canvas.width  / 2 - sun.width  / 2;
+  sun.y = canvas.height / 2 - sun.height / 2;
+  viewport.setCenter( viewport.getViewPortX(sun.x), viewport.getViewPortY(sun.y) );
 
   var mercury = {
     width: 3,
@@ -114,8 +114,9 @@ function init(){
   var numEntities = entities.length;
 
   setInterval(function(){
-    resizeToFit(ctx);
     clear(ctx);
+    drawAxis(ctx);
+
     for(i=0;i<numEntities; i++)
     {
       updatePosition(entities[i],entities[0],viewport);
@@ -125,16 +126,37 @@ function init(){
 }
 
 function draw(ctx, obj, viewport){
+  if(!viewport.isObjectVisible(obj)){
+    ctx.strokeStyle = "#fff0f0";
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+    ctx.moveTo(viewport.getViewPortX(obj.x)-10,viewport.getViewPortY(obj.y));
+    ctx.lineTo(viewport.getViewPortX(obj.x)+10,viewport.getViewPortY(obj.y));
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(viewport.getViewPortX(obj.x),viewport.getViewPortY(obj.y)-10);
+    ctx.lineTo(viewport.getViewPortX(obj.x),viewport.getViewPortY(obj.y)+10);
+    ctx.stroke();
+
+    return;
+  }
   var x = viewport.getViewPortX(obj.x);
   var y = viewport.getViewPortY(obj.y);
+  var scaledwidth = obj.width * viewport.getScale();
+  var scaledheight = obj.height * viewport.getScale();
   ctx.fillStyle = obj.fillStyle; 
-  ctx.fillRect(x,y,obj.width,obj.height);
+  ctx.fillRect(x,y,scaledwidth,scaledheight);
 
   if(obj.ring){
-    var ringx = obj.x - (obj.ring.width - obj.width)/2;
-    var ringy = obj.y - (obj.ring.height - obj.height)/2;
+    var scaledringwidth = obj.ring.width * viewport.getScale();
+    var scaledringheight = obj.ring.height * viewport.getScale();
+    var ringx = x - (scaledringwidth - scaledwidth)/2;
+    var ringy = y - (scaledringheight - scaledheight)/2;
     ctx.strokeStyle = obj.ring.strokeStyle;
-    ctx.strokeRect(ringx,ringy,obj.ring.width,obj.ring.height);
+    ctx.lineWidth = 1;
+    ctx.strokeRect(ringx,ringy,scaledringwidth,scaledringheight);
   }
 }
 
@@ -142,6 +164,32 @@ function getCenterCoords(obj){
   var x = obj.x + obj.width/2;
   var y = obj.y + obj.height/2;
   return [x,y];
+}
+
+function drawAxis(ctx){
+  ctx.strokeStyle="#fff";
+  ctx.lineWidth=1;
+  var axisLength = 10000;
+
+  ctx.beginPath();
+  ctx.moveTo(viewport.getViewPortX(0),viewport.getViewPortY(0));
+  ctx.lineTo(viewport.getViewPortX(0),viewport.getViewPortY(axisLength));
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(viewport.getViewPortX(0),viewport.getViewPortY(0));
+  ctx.lineTo(viewport.getViewPortX(0),viewport.getViewPortY(-axisLength));
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(viewport.getViewPortX(0),viewport.getViewPortY(0));
+  ctx.lineTo(viewport.getViewPortX(-axisLength),viewport.getViewPortY(0));
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(viewport.getViewPortX(0),viewport.getViewPortY(0));
+  ctx.lineTo(viewport.getViewPortX(axisLength),viewport.getViewPortY(0));
+  ctx.stroke();
 }
 
 function updatePosition(obj, centerObj, viewport){
@@ -182,13 +230,8 @@ function updatePosition(obj, centerObj, viewport){
   }
 }
 
-function resizeToFit(ctx){
-  ctx.canvas.height = window.innerHeight;
-  ctx.canvas.width  = window.innerWidth;
-}
-
 function clear(ctx) {
   ctx.fillStyle = "#000";
-  ctx.clearRect(ctx.canvas.width,ctx.canvas.height);
+  ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
 }
 
