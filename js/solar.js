@@ -11,6 +11,20 @@ var solar = (function(){
   var nonViewable  = [];
   var pub          = {};
 
+  var glowImages   = [];
+  var img   = new Image();
+  img.src   = "/img/glow_squared_ffffff_100x100.png";
+  glowImages.push(img);
+
+  img       = new Image();
+  img.src   = "/img/glow_circled_ffffff_100x100.png";
+  glowImages.push(img);
+
+  img       = new Image();
+  img.src   = "/img/glow_squared_ffc844_100x100.png";
+  glowImages.push(img);
+
+
   pub.nonViewable  = nonViewable;
 
   function init(){
@@ -22,116 +36,34 @@ var solar = (function(){
     entities     = [];
     nonViewable  = [];
 
-    var startY = viewport.transY( canvas.height / 2 );
-
-    var sun = {
-      width: 100,
-      height: 100,
-      fillStyle: "#fff",
-      x:0,
-      y:0,
-      orbit:false
-    };
-    sun.x = canvas.width  / 2 - sun.width  / 2;
-    sun.y = canvas.height / 2 - sun.height / 2;
-    viewport.x = 200;
+    viewport.x = 0;
     viewport.y = 0;
-    //viewport.setCenter(10,-100);
     viewport.setScale(0.5);
 
-    var mercury = {
-      width: 3,
-      height: 3,
-      fillStyle: "#ff5d40",
-      x: sun.x + sun.width/2 + 60,
-      y: sun.y + sun.height/2,
-      orbit:true
-    };
+    this.startY = viewport.transY( canvas.height / 2 );
+    this.startX = viewport.transX( canvas.width /2 );
 
-    var venus = {
-      width: 5,
-      height: 5,
-      fillStyle: "#ffb740",
-      x: mercury.x + 40,
-      y: startY,
-      orbit:true
-    };
+    createPlanets.call(this,this);
 
-    var earth = {
-      width: 5,
-      height: 5,
-      fillStyle: "#4869d6",
-      x: venus.x + 60,
-      y: startY,
-      orbit:true
-    };
+    //this.sun.x = canvas.width  / 2 - this.sun.width  / 2;
+    //this.sun.y = canvas.height / 2 - this.sun.height / 2;
 
-    var mars = {
-      width: 3,
-      height: 3,
-      fillStyle: "#A60000",
-      x: earth.x + 60,
-      y: startY,
-      orbit:true
-    };
-
-    var jupiter = {
-      width: 20,
-      height: 20,
-      fillStyle: "#ffb640",
-      x: mars.x + 100,
-      y: startY,
-      orbit:true
-    };
-
-    var saturn = {
-      width: 7,
-      height: 7,
-      fillStyle: "#ffb640",
-      x: jupiter.x + 250,
-      y: jupiter.y,
-      orbit:true,
-      ring: {
-        width: 14,
-        height: 14,
-        strokeStyle: "#fff"
-      }
-    };
-
-    var uranus = {
-      width: 3,
-      height: 3,
-      fillStyle: "#33cdc7",
-      x: saturn.x + 200,
-      y: saturn.y,
-      orbit:true
-    };
-
-    var neptune = {
-      width: 3,
-      height: 3,
-      fillStyle: "#0b5fa5",
-      x: uranus.x + 100,
-      y: uranus.y,
-      orbit:true
-    };
-
-    entities.push(sun);
-    entities.push(mercury);
-    entities.push(venus);
-    entities.push(earth);
-    entities.push(mars);
-    entities.push(jupiter);
-    entities.push(saturn);
-    entities.push(uranus);
-    entities.push(neptune);
+    entities.push(this.sun);
+    entities.push(this.mercury);
+    entities.push(this.venus);
+    entities.push(this.earth);
+    entities.push(this.mars);
+    entities.push(this.jupiter);
+    entities.push(this.saturn);
+    entities.push(this.uranus);
+    entities.push(this.neptune);
 
     pub.entities = entities;
 
     var i = 0; 
     var numEntities = entities.length;
 
-    keyboard.init(sun);
+    keyboard.init(this.sun);
 
     setInterval(function(){
       clear(ctx);
@@ -167,6 +99,9 @@ var solar = (function(){
 
   function draw(ctx, obj, vp){
     ctx.moveTo(0,0);
+
+    addGlow(ctx,obj,vp);
+
     var localObj = vp.transToLocal(obj);
     if(!vp.isObjectVisible(localObj)){
       drawCrossAt(ctx,localObj,vp,obj.fillStyle);
@@ -184,6 +119,69 @@ var solar = (function(){
       ctx.lineWidth = 1;
       ctx.strokeRect(ringx,ringy,scaledringwidth,scaledringheight);
     }
+
+  }
+
+  function addGlow(ctx,obj,vp) {
+    var localObj = vp.transToLocal(obj);
+    if(obj.glow){
+      if(typeof obj.glow !== "object"){
+        obj.glow = {
+          color:"ffffff",
+          shape:"squared" 
+        };
+      }
+      var endingFactor   = 2;
+      var startingFactor = 1.5;
+      var glowSteps      = 5;
+
+      if(obj.glow.startingFactor){
+        startingFactor = obj.glow.startingFactor;
+      }
+      if(obj.glow.endingFactor){
+        endingFactor   = obj.glow.endingFactor;
+      }
+      if(obj.glow.steps){
+        glowSteps = obj.glow.steps;
+      }
+
+      var glowStep = (endingFactor - startingFactor)/glowSteps;
+      var glowX;
+      var glowY;
+      var glowW;
+      var glowH;
+
+      for(var i = startingFactor; i< endingFactor; i += glowStep){
+        glowW   = localObj.width  * i;
+        glowH   = localObj.height * i;
+        glowX   = localObj.x - (glowW - localObj.width )/2;
+        glowY   = localObj.y - (glowH - localObj.height)/2;
+        if(!obj.glow.img){
+          obj.glow.img = getGlowImageBasedOnCriteria(obj);
+        }
+        ctx.drawImage(obj.glow.img,glowX,glowY,glowW,glowH);
+      }
+    }
+  }
+
+  function getGlowImageBasedOnCriteria(obj){
+    var img = _.filter(glowImages,function(img){
+                var result = true;
+                if(obj.glow.color){
+                  result = result && new RegExp(obj.glow.color).test(img.src);
+                }
+                if(obj.glow.shape){
+                  result = result && new RegExp(obj.glow.shape).test(img.src);
+                }
+                return result;
+              });
+    if(!img){
+      img = glowImages[0];
+    }
+    else{
+      img = img[0];
+    }
+    return img;
   }
 
   function getCenterCoords(obj){
