@@ -1,12 +1,26 @@
 var keyboard = (function(){
   var pub = {};
-  var sun = null;
+  var centerObj = null;
+  var minStep = 1;
+  var maxStep = 70;
+  // We want to go from 1, to 50 in 2 seconds (~60 frames)
+  // How much do we have to increase per frame?
+  var increasePerFrame = (80/maxStep);
+  var currentStep = minStep;
+  function getCurrentStepAmount(){
+    if(currentStep<maxStep){
+      currentStep += increasePerFrame;
+    }
+    else{
+      currentStep = maxStep;
+    }
+    return currentStep;
+  }
   function handleKeyDown(e) {
-    //console.log(e);
-    var directionStep = 50;
+    var directionStep = getCurrentStepAmount();
     var zoomStep      = 0.01;
     if(e.shiftKey){
-      directionStep = 100;
+      directionStep = getCurrentStepAmount() * 2;
       zoomStep      = 0.5;
     }
     if(e.keyCode == 39){ 
@@ -39,15 +53,19 @@ var keyboard = (function(){
     }
     else if(e.keyCode == 67){
       //c = center
-      //viewport.x = viewport.transX(sun.x) - viewport.width/2;
-      //viewport.y = viewport.transY(sun.y) - viewport.height/2;
+      //viewport.x = viewport.transX(centerObj.x) - viewport.width/2;
+      //viewport.y = viewport.transY(centerObj.y) - viewport.height/2;
       //console.log("Centered at " + viewport.x + ", "+ viewport.y);
     }
   }
+  function handleKeyUp() {
+    currentStep = minStep;
+  }
 
-  function init(thesun){
+  function init(obj){
     window.onkeydown = handleKeyDown;
-    sun = thesun;
+    window.onkeyup   = handleKeyUp;
+    centerObj = obj;
   }
 
   pub.init = init;

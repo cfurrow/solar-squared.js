@@ -3,7 +3,7 @@
 */
 
 var solar = (function(){
-  var FPS          = 30;
+  var FPS          = 40;
   var canvas       = null; 
   var ctx          = null;
   var viewport     = null;
