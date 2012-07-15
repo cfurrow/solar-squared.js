@@ -64,6 +64,7 @@ var solar = (function(){
     var numEntities = entities.length;
 
     keyboard.init(this.sun);
+    mouse.init();
 
     setInterval(function(){
       clear(ctx);

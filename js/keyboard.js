@@ -1,7 +1,7 @@
 var keyboard = (function(){
   var pub = {};
   var centerObj = null;
-  var minStep = 1;
+  var minStep = 5;
   var maxStep = 70;
   // We want to go from 1, to 50 in 2 seconds (~60 frames)
   // How much do we have to increase per frame?
