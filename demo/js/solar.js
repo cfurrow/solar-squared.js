@@ -13,15 +13,15 @@ var solar = (function(){
 
   var glowImages   = [];
   var img   = new Image();
-  img.src   = "/img/glow_squared_ffffff_100x100.png";
+  img.src   = "img/glow_squared_ffffff_100x100.png";
   glowImages.push(img);
 
   img       = new Image();
-  img.src   = "/img/glow_circled_ffffff_100x100.png";
+  img.src   = "img/glow_circled_ffffff_100x100.png";
   glowImages.push(img);
 
   img       = new Image();
-  img.src   = "/img/glow_squared_ffc844_100x100.png";
+  img.src   = "img/glow_squared_ffc844_100x100.png";
   glowImages.push(img);
 
 
