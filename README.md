@@ -9,6 +9,8 @@ I wanted to get to know HTML5 canvas a bit more, and I'm fascinated with celesti
 ## How do I run it?
 Clone the repo, open up index.html in your browser. You can be amazed if you want, but it's not a requirement or an expectation.
 
+[Or you check out the demo.](http://cfurrow.github.com/solar-squared.js/demo/)
+
 ### How to clone the repo
     git clone https://github.com/cfurrow/solar-squared.js.git
 
